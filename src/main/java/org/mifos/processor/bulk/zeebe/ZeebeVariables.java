@@ -2,8 +2,7 @@ package org.mifos.processor.bulk.zeebe;
 
 public class ZeebeVariables {
 
-    private ZeebeVariables() {
-    }
+    private ZeebeVariables() {}
 
     public static final String ACCOUNT = "account";
     public static final String AUTH_RETRIES_LEFT = "authRetriesLeft";
@@ -55,7 +54,7 @@ public class ZeebeVariables {
 
     public static final String FORMATTING_ENABLED = "formattingEnabled";
 
-    public static final String SUCCESS_THRESHOLD_CHECK_ENABLED = "successThresholdCheckEnabled";
+    public static final String COMPLETION_THRESHOLD_CHECK_ENABLED = "completionThresholdCheckEnabled";
 
     public static final String MERGE_ENABLED = "mergeEnabled";
 
@@ -89,9 +88,9 @@ public class ZeebeVariables {
 
     public static final String CALLBACK_RETRY = "callbackRetryCount";
 
-    public static final String SUCCESS_THRESHOLD = "successThreshold";
+    public static final String COMPLETION_THRESHOLD = "completionThreshold";
 
-    public static final String SUCCESS_RATE = "successRate";
+    public static final String COMPLETION_RATE = "completionRate";
 
     public static final String ERROR_CODE = "errorCode";
 
@@ -105,7 +104,27 @@ public class ZeebeVariables {
 
     public static final String CALLBACK_URL = "callbackUrl";
 
+    public static final String MAX_CALLBACK_RETRY = "maxCallbackRetry";
+
     public static final String BULK_NOTIF_SUCCESS = "isNotificationsSuccessEnabled";
 
     public static final String BULK_NOTIF_FAILURE = "isNotificationsFailureEnabled";
+
+    public static final String PHASES = "phases";
+
+    public static final String PHASE_COUNT = "phaseCount";
+
+    public static final String INITIATOR_FSP_ID = "initiatorFspId";
+    public static final String ACCOUNT_LOOKUP_RETRY_COUNT = "accountLookupRetryCount";
+    public static final String ACCOUNT_LOOKUP_FAILED = "accountLookupFailed";
+    public static final String ORIGIN_CHANNEL_REQUEST = "originChannelRequest";
+    public static final String CALLBACK = "X-CallbackURL";
+
+    public static final String DEBULKINGDFSPID = "debulkingDfspid";
+
+    public static final String FILE_VALIDITY = "isFileValid";
+
+    public static final String NOTE = "note";
+    public static final String PARTY_LOOKUP_FSP_ID = "partyLookupFspId";
+
 }

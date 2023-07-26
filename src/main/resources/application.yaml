@@ -29,7 +29,7 @@ zeebe:
     contactpoint: "zeebe-zeebe-gateway:26500"
 
 operations-app:
-  contactpoint: "https://ops-bk.sandbox.fynarfin.io"
+  contactpoint: "https://ops-bk.sandbox.mifos.io"
   username: "mifos"
   password: "password"
   endpoints:
@@ -72,20 +72,10 @@ bpmn:
     international-remittance-payee: "international_remittance_payee_process-{dfspid}"
     international-remittance-payer: "international_remittance_payer_process-{dfspid}"
     debit-party-process: "debit_party_process-{dfspid}"
-    bulk-processor: "bulk_processor-ibank-usa"
+    bulk-processor: "bulk_processor-{dfspid}"
     slcb: "slcb-{dfspid}"
 
-payment-mode:
-  mappings:
-    - id: "GSMA"
-      type: "PAYMENT"
-      endpoint: "/channel/gsma/transfer"
-    - id: "MOJALOOP"
-      type: "PAYMENT"
-      endpoint: "/channel/transfer"
-    - id: "SLCB"
-      type: "BULK"
-      endpoint: "bulk_connector_{MODE}-{dfspid}"
+#payment mode moved to a separate application property file for helm rewrite
 
 config:
   minimum-successful-tx-ratio: 0.90
@@ -94,8 +84,8 @@ config:
   approval:
     enable: true
   ordering:
-    enable: false
-    field: "payment_mode"
+    enable: true
+    field: "payee_identifier"
   splitting:
     enable: false
     sub-batch-size: 5
@@ -106,11 +96,35 @@ config:
     enable: false
   backpressure:
     enable: false
-  success-threshold-check:
+  completion-threshold-check:
     enable: false
-    success-threshold: 95 # in percentage
-    max-retry: 4
+    completion-threshold: 95 # in percentage
+    max-retry: 4 #can be as high as 30
     delay: 60 # in seconds
+  deduplication:
+    enabled: true
 
 callback:
+  max-retry: 3
   url: "http://httpstat.us/503"
+
+pollingApi:
+  timer: "120"
+
+callback-phases:
+  values:
+    - 20
+    - 40
+    - 60
+    - 80
+    - 100
+
+identity-account-mapper:
+  hostname : "https://identity.sandbox.mifos.io"
+
+bulk-processor:
+  hostname : "https://bulk-connector.sandbox.mifos.io"
+
+csv:
+  columnNames: "id,request_id,payment_mode,payer_identifier_type,payer_identifier,payee_identifier_type,payee_identifier,amount,currency,note"
+  size : 100000 # in bytes

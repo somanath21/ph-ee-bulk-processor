@@ -24,7 +24,10 @@ public class WorkerConfig {
     @Value("${config.mergeback.enable}")
     public boolean isMergeBackWorkerEnabled;
 
-    @Value("${config.success-threshold-check.enable}")
-    public boolean isSuccessThresholdCheckEnabled;
+    @Value("${config.completion-threshold-check.enable}")
+    public boolean isCompletionThresholdCheckEnabled;
+
+    @Value("${config.deduplication.enabled}")
+    public boolean isTransactionDeduplicationEnabled;
 
 }
