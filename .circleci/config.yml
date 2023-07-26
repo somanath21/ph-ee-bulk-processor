@@ -1,46 +1,40 @@
 version: 2.1
-orbs:
-  slack: circleci/slack@4.12.5
-  aws-ecr: circleci/aws-ecr@8.2.1
 jobs:
-  build:
+  build_and_push:
     docker:
-      - image: cimg/openjdk:17.0.0
-      - image: docker:17.05.0-ce-git
-    working_directory: ~/repo
+      - image: circleci/openjdk:17-buster-node-browsers-legacy
+      
     environment:
-      # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx512m
       TERM: dumb
+      # Add any environment variables needed for the build here
     steps:
       - checkout
-      - setup_remote_docker
-#       - slack/notify:
-#           event: fail
-#           mentions: '@here'
-#           template: basic_fail_1
-#       - slack/notify:
-#           event: pass
-#           template: basic_success_1
-      - run: ./gradlew clean bootJar
-      - aws-ecr/build-and-push-image:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          extra-build-args: '--compress'
-          push-image: true
-          region: "$REGION"
-          registry-id: AWS_REGISTRY_ID
-          repo: phee-bulk-processor
-          repo-scan-on-push: true
-          role-arn: arn:aws:iam::419830066942:role/CustomAdmin
-          tag: latest
-      # - run: ./gradlew cucumberCli
-      # run tests! Slack Success/Fail Notification Step
-      #- run: ./gradlew test
+      - setup_remote_docker:
+          version: 20.10.14
+
+      # Login to DockerHub
+      - run:
+          name: Login to DockerHub
+          command:  docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD 
+
+      # Build the Docker image
+      - run:
+          name: Build Docker image
+          command: |
+            ./gradlew build
+            docker build -t ph-ee-bulk-processor:latest .
+
+      # Push the Docker image to DockerHub
+      - run:
+          name: Push Docker image to DockerHub
+          command: |
+            docker push somanath21/ph-ee-bulk-processor:latest
+
 workflows:
-  build_and_push_image:
+  version: 2
+  build_and_push:
     jobs:
-      - build:
+      - build_and_push:
           context:
-            - AWS
-            - slack
+            - DOCKER
