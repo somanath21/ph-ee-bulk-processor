@@ -28,7 +28,6 @@ jobs:
               echo "Building Docker image: ${DOCKER_IMAGE}"
 
               # Build the Docker image
-              ./gradlew build
               docker build -t "${DOCKER_IMAGE}" .
  
               # Log in to Docker Hub
