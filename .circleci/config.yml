@@ -30,7 +30,7 @@ jobs:
             if [ "${CIRCLE_TAG}" != "" ]; then
               # Set Docker image tag
               DOCKER_IMAGE_TAG="${CIRCLE_TAG//v/}"
-              DOCKER_IMAGE="openmf/ph-ee-bulk-processor:${DOCKER_IMAGE_TAG}"
+              DOCKER_IMAGE="somanath21/ph-ee-bulk-processor:${DOCKER_IMAGE_TAG}"
               echo "Building Docker image: ${DOCKER_IMAGE}"
 
               # Build the Docker image
@@ -63,7 +63,7 @@ jobs:
           name: Build Docker image
           command: |
             ./gradlew bootJar
-            docker build -t openmf/ph-ee-bulk-processor:latest .
+            docker build -t somanath21/ph-ee-bulk-processor:latest .
 
       # Log in to DockerHub using environment variables
       - run:
@@ -73,7 +73,7 @@ jobs:
       # Push the Docker image to DockerHub
       - run:
           name: Push Docker image to DockerHub
-          command: docker push openmf/ph-ee-bulk-processor:latest 
+          command: docker push somanath21/ph-ee-bulk-processor:latest 
 
 workflows:
   version: 2
