@@ -36,7 +36,7 @@ jobs:
             docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
             docker push "openmf/ph-ee-bulk-processor:$IMAGE_TAG"
 
-          when: always  # The job will be executed even if there's no match for the tag filter
+          # when: always  # The job will be executed even if there's no match for the tag filter
   
   build_and_push_latest_image:
     executor: docker-executor
