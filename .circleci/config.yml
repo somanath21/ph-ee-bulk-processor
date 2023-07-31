@@ -13,7 +13,6 @@ jobs:
       GITHUB_TOKEN: ${GITHUB_TOKEN}  # Add the GitHub token as an environment variable
 
     steps:
-      - checkout
       - run:
           name: Checkout specific tag
           command: |
