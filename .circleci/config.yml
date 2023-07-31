@@ -10,11 +10,15 @@ jobs:
     environment:
       JVM_OPTS: -Xmx512m
       TERM: dumb  
+      GITHUB_TOKEN: ${GITHUB_TOKEN}  # Add the GitHub token as an environment variable
+
     steps:
       - checkout
       - run:
           name: Checkout specific tag
-          command: git fetch --tags && git checkout tags/v1.6.0
+          command: |
+            git fetch --tags 
+            git checkout tags/v1.6.0
       - setup_remote_docker:
           version: 20.10.14
       - run:
