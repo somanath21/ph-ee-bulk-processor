@@ -1,4 +1,8 @@
 version: 2.1
+executors:
+  docker-executor:
+    docker:
+      - image: circleci/openjdk:17-buster-node-browsers-legacy
 jobs:
   build_push_tag_image:
     docker:
