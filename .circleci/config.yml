@@ -12,6 +12,9 @@ jobs:
       TERM: dumb  
     steps:
       - checkout
+      - run:
+          name: Checkout specific tag
+          command: git fetch --tags && git checkout tags/v1.6.0
       - setup_remote_docker:
           version: 20.10.14
       - run:
