@@ -54,6 +54,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
+            IMAGE_TAG=$CIRCLE_TAG
             ./gradlew bootJar
             docker build -t openmf/ph-ee-bulk-processor:latest .
 
@@ -78,6 +79,9 @@ workflows:
           context:
               - DOCKER
       - build_and_push_latest_image:
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
           context:
               - DOCKER
              
